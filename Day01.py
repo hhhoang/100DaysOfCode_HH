@@ -1,5 +1,3 @@
-import string
-
 # Everyone knows passphrases. One can choose passphrases from poems, songs, movies names and so on but frequently they can be guessed due to common cultural references. You can get your passphrases stronger by different means. One is the following:
 # 1) choose a text in capital letters including or not digits and non alphabetic characters,
 # 2) shift each letter by a given number but the transformed letter must be a letter (circular shift),
@@ -9,6 +7,7 @@ import string
 # 6) reverse the whole result.
 # https://www.codewars.com/kata/559536379512a64472000053/train/python
 
+import string
 
 def play_pass(s, n):
     alphabet = list(string.ascii_uppercase)
