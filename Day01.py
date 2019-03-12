@@ -34,8 +34,7 @@ def play_pass(s, n):
 		
     print(new_list)
     result_string = ''.join(str(i) for i in new_list)
-    print (result_string)
     return result_string
 
-result = play_pass("MY GRANMA CAME FROM NY ON THE 23RD OF APRIL 2015", 2)
-result = "4897 NkTrC Hq fT67 GjV Pq aP OqTh gOcE CoPcTi aO"
+print("Actual:   " + play_pass("MY GRANMA CAME FROM NY ON THE 23RD OF APRIL 2015", 2))
+print("Expected: 4897 NkTrC Hq fT67 GjV Pq aP OqTh gOcE CoPcTi aO")
