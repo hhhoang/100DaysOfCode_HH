@@ -26,6 +26,11 @@ def stock_list(listOfArt, listOfCat):
             for j in listOfArt:
                 if j.startswith(i):
                     value += int(j.split(" ")[1])
-            resultString += "("+i+" : "+str(value)+") - "       
+            resultString += "(" + i + " : " + str(value) + ") - "
         resultString = resultString[:-3]
         return resultString
+
+b = ["ABAR 200", "CDXE 500", "BKWR 250", "BTSQ 890", "DRTY 600"]
+c = ["A", "B"]
+print("Actual:   " + stock_list(b, c))
+print("Expected: (A : 200) - (B : 1140)")
