@@ -10,42 +10,30 @@ def solve_runes(runes):
     result = []
     for i in range(10):
         new_runes = runes.replace("?", str(i))
-        #print("iterate value in input: ", new_runes)
         lhs, rhs = new_runes.split("=")
         
         if "+" in lhs:
             lhs_1, lhs_2 = lhs.split("+")
-            if len(list(lhs_1)) > 1 and lhs_1.startswith("0"):
-                print("zero trailing: ", lhs_1)
+            if check_trailing_zero(lhs_1) == True or check_trailing_zero(lhs_2) == True or check_trailing_zero(rhs) == True:
                 pass
-            elif len(list(lhs_2)) > 1 and lhs_2.startswith("0"):
-                print("zero trailing: ", lhs_2)
-                pass   
-            elif len(list(rhs)) > 1 and rhs.startswith("0"):
-                print("zero trailing: ", rhs)
-                pass                
             elif int(lhs_1) + int(lhs_2) == int(rhs):
                 result.append(i)
         elif "*" in lhs:
             lhs_1, lhs_2 = lhs.split("*")
-            if len(list(lhs_1)) > 1 and lhs_1.startswith("0"):
-                print("zero trailing: ", lhs_1)
-                pass
-            elif len(list(lhs_2)) > 1 and lhs_2.startswith("0"):
-                print("zero trailing: ", lhs_2)
-                pass   
-            elif len(list(rhs)) > 1 and rhs.startswith("0"):
-                print("zero trailing: ", rhs)
+            if check_trailing_zero(lhs_1) == True or check_trailing_zero(lhs_2) == True or check_trailing_zero(rhs) == True:
                 pass             
             elif int(lhs_1) * int(lhs_2) == int(rhs):
                 result.append(i)            
         # TODO: issue with negative number as "-" in split
-        elif "-" in lhs:
+        elif "-" in lhs and "-" != list(lhs)[0]:
+            lhs_1, lhs_2 = lhs.split("-")            
+            if check_trailing_zero(lhs_1) == True or check_trailing_zero(lhs_2) == True or check_trailing_zero(rhs) == True:
+                pass             
+            elif int(lhs_1) - int(lhs_2) == int(rhs):
+                result.append(i)            
+        elif "-" in lhs and "-" == list(lhs)[0]:
             occurence = [m.start() for m in re.finditer('-',lhs)]
-            if len(occurence) == 2:
-                lhs_1, lhs_2 = lhs[:occerence[1], lhs[occerence[1]+1:]
-            else:
-                lhs_1, lhs_2 = lhs.split("-")            
+            lhs_1, lhs_2 = lhs[:occurence[1]], lhs[occurence[1]+1:]
             if len(list(lhs_1)) > 1 and lhs_1.startswith("0"):
                 print("zero trailing: ", lhs_1)
                 pass
@@ -56,17 +44,31 @@ def solve_runes(runes):
                 print("zero trailing: ", rhs)
                 pass             
             elif int(lhs_1) - int(lhs_2) == int(rhs):
-                result.append(i)            
-    
-    print("results are: ", result)
+                result.append(i) 
+                
+    print("initial results are: ", result)
     # Result cannot be identical to elements in the original runes
+    final_result = []
     for i in result:
-        if str(i) in runes:
-            print(result)
-            result.remove(i)
-    if len(result) == 0:
+        print("loop:", i)
+        if str(i) not in runes:
+            print("is not in rune: ", i)
+            final_result.append(i)
+    
+    if len(final_result) == 0:
         result = -1
     else:
-        result = result[0]
+        result = final_result[0]
     print("final result is: ", result)
     return result
+
+
+def check_trailing_zero(inp):
+    if inp.startswith("-"):
+        inp = inp[1:]
+    else:
+        inp = inp
+    if len(inp) > 1 and inp.startswith("0"):
+        return True
+    else:
+        return False
