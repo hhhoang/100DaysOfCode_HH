@@ -34,15 +34,8 @@ def solve_runes(runes):
         elif "-" in lhs and "-" == list(lhs)[0]:
             occurence = [m.start() for m in re.finditer('-',lhs)]
             lhs_1, lhs_2 = lhs[:occurence[1]], lhs[occurence[1]+1:]
-            if len(list(lhs_1)) > 1 and lhs_1.startswith("0"):
-                print("zero trailing: ", lhs_1)
+            if check_trailing_zero(lhs_1) == True or check_trailing_zero(lhs_2) == True or check_trailing_zero(rhs) == True:
                 pass
-            elif len(list(lhs_2)) > 1 and lhs_2.startswith("0"):
-                print("zero trailing: ", lhs_2)
-                pass   
-            elif len(list(rhs)) > 1 and rhs.startswith("0"):
-                print("zero trailing: ", rhs)
-                pass             
             elif int(lhs_1) - int(lhs_2) == int(rhs):
                 result.append(i) 
                 
