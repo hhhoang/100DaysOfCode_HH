@@ -8,5 +8,19 @@
 #Example: solution(1000) # should return 'M'
 #https://www.codewars.com/kata/roman-numerals-encoder/train/python
 
+# credit to https://www.oreilly.com/library/view/python-cookbook/0596001673/ch03s24.html
+def int_to_roman(input):
+    """ Convert an integer to a Roman numeral. """
 
-
+    if not isinstance(input, type(1)):
+        raise TypeError ("expected integer")
+    if not 0 < input < 4000:
+        raise ValueError ("Argument must be between 1 and 3999")
+    ints = (1000, 900,  500, 400, 100,  90, 50,  40, 10,  9,   5,  4,   1)
+    nums = ('M',  'CM', 'D', 'CD','C', 'XC','L','XL','X','IX','V','IV','I')
+    result = []
+    for i in range(len(ints)):
+        count = int(input / ints[i])
+        result.append(nums[i] * count)
+        input -= ints[i] * count
+    return ''.join(result)
