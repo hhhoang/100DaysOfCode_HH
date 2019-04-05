@@ -16,3 +16,30 @@ We want our function to return:
 0 if it's a cat's game (i.e. a draw).
 You may assume that the board passed in is valid in the context of a game of Tic-Tac-Toe.
 """
+import numpy as np
+
+def isSolved(board):
+    check_list = []
+    board_listing = []
+    # horizontal
+    for i in list(board):
+        check_list.append(i)
+        for j in i:
+            board_listing.append(j)
+    # vertical
+    for i in np.matrix(board).T.tolist():
+        check_list.append(i)
+    # diagonals
+    check_list.append([r[i] for i, r in enumerate(board)])
+    check_list.append([r[-i-1] for i, r in enumerate(board)])
+    print(board_listing)
+    result = 0
+
+    if [1, 1, 1] in check_list:
+        print('yes')
+        result = 1
+    elif [2, 2, 2] in check_list:
+        result = 2
+    elif 0 in board_listing:
+        result = -1
+    return result
