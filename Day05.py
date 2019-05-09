@@ -21,8 +21,4 @@ def high(x):
         if letter_value > highest_value:
             highest_value = letter_value
             highest_letter = letter
-
-
     return highest_letter
-
-high('man i need a taxi up to ubud') == "taxi"
