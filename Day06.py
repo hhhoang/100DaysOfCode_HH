@@ -28,31 +28,37 @@ Examples:
 "Buy: 263 Sell: 11802; Badly formed 2: CLH16.NYM 50 56 S ;OWW 1000 11 S ;"
 "Buy: 100 Sell: 56041; Badly formed 1: ZNGA 1300 2.66 ;" """
 
+import re
 def balance_statement(lst):
-    print(lst)
+    """
+    return the total price of bought and sold stocks, and badly formed orders
+    """
     buy = 0
     sell = 0
     badOrders = []
     orders = lst.split(", ")
-    if len(orders) == 0:
+    # check the input for required elements
+    if len(orders) == 0 or orders == [""]:
         results = "Buy: " + str(int(buy)) + " Sell: " + str(int(sell))
     else:
         for order in orders:
             order = order.split(" ")
-            if len(order) == 4:
-              # ToDO: if order[1] == 250.0 int(order[1]) will give ValueError
-                if int(order[1]) and float(order[2]) and "B" in order[3]:
+            try:
+                if re.match(r"[-+]?\d+$", order[1]) and re.match("^\d*?\.\d+?$", order[2]) and order[3] == "B":
                     buy += int(order[1])*float(order[2])
-                elif int(order[1]) and float(order[2]) and "S" in order[3]:
+                elif re.match(r"[-+]?\d+$", order[1]) and re.match("^\d*?\.\d+?$", order[2]) and order[3] == "S":
                     sell += int(order[1])*float(order[2])
                 else:
                     badOrders.append(order)
-            
+            except:
+                badOrders.append(order)
     badOrderString = ""
+    # convert bad Order array to string for result
     for i in badOrders:
-        badOrderString += str(i) + " ;"
+        badOrderString += " ".join(i) + " ;" 
+    # prepare results
     if len(badOrders) == 0:
         results = "Buy: " + str(int(round(buy))) + " Sell: " + str(int(round(sell)))
     else:
-        results = "Buy: " + str(round(buy)) + " Sell: " + str(round(sell)) + "; Badly formed " + str(len(badOrders)) + badOrderString
+        results = "Buy: " + str(int(round(buy))) + " Sell: " + str(int(round(sell))) + "; Badly formed " + str(len(badOrders)) + ": "  + badOrderString
     return results
