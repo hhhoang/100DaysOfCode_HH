@@ -53,9 +53,11 @@ def balance_statement(lst):
             except:
                 badOrders.append(order)
     badOrderString = ""
+    
     # convert bad Order array to string for result
     for i in badOrders:
         badOrderString += " ".join(i) + " ;" 
+    
     # prepare results
     if len(badOrders) == 0:
         results = "Buy: " + str(int(round(buy))) + " Sell: " + str(int(round(sell)))
